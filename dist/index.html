@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A local-first agent execution replay and structural diff console." />
+    <title>Agent Run Replay — Console</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar">
+        <a class="brand" href="#top" aria-label="Agent Run Replay home"><span class="brand-mark">↻</span><span>agent/<b>replay</b></span></a>
+        <nav aria-label="Primary navigation">
+          <a class="nav-item active" href="#runs"><span>▣</span> Runs <b>04</b></a>
+          <a class="nav-item" href="#diff"><span>⇄</span> Compare</a>
+          <a class="nav-item" href="#tape"><span>⌁</span> Replay tape</a>
+        </nav>
+        <div class="sidebar-foot">
+          <span class="local-dot"></span> Local-only workspace
+          <small>JSONL · zero provider calls</small>
+        </div>
+      </aside>
+      <main id="top">
+        <header class="topbar">
+          <div class="crumb"><span>workspaces</span><i>/</i><strong>support-agent</strong><i>/</i><span>runs</span></div>
+          <div class="top-actions"><button class="ghost" id="themeBtn" aria-label="Toggle contrast">◐</button><button class="profile">AD</button></div>
+        </header>
+        <section class="headline">
+          <div><p class="eyebrow">Execution diagnostics</p><h1>Run explorer</h1><p>Inspect an immutable event stream, compare structural drift, then replay the exact recorded exchange locally.</p></div>
+          <div class="headline-actions"><button class="secondary" id="compareBtn">Compare runs</button><button class="primary" id="replayBtn">Replay selected <span>↻</span></button></div>
+        </section>
+        <section class="metrics" aria-label="Run metrics">
+          <article><span>Selected run</span><strong id="selectedRun">support-20260912-018</strong><small><span class="ok-dot"></span> completed</small></article>
+          <article><span>Recorded events</span><strong id="eventCount">18</strong><small>9 paired exchanges</small></article>
+          <article><span>Replay readiness</span><strong>100%</strong><small>all responses present</small></article>
+          <article><span>Redaction</span><strong>2 fields</strong><small>credentials masked at ingest</small></article>
+        </section>
+        <section class="workspace" id="runs">
+          <div class="run-list panel">
+            <div class="panel-head"><div><p class="eyebrow">Stored runs</p><h2>Recent executions</h2></div><button class="icon-button" aria-label="Filter runs">☷</button></div>
+            <div class="run-items" id="runItems"></div>
+          </div>
+          <div class="timeline panel">
+            <div class="panel-head"><div><p class="eyebrow">Event stream</p><h2 id="timelineTitle">support-20260912-018</h2></div><div class="status"><span></span> Validated</div></div>
+            <div class="timeline-tools"><button class="seg active">All <b>18</b></button><button class="seg">Model <b>6</b></button><button class="seg">Tools <b>8</b></button><button class="seg">State <b>4</b></button><button class="export">⇩ Export JSONL</button></div>
+            <div class="events" id="events"></div>
+          </div>
+          <aside class="detail panel" id="tape">
+            <div class="panel-head"><div><p class="eyebrow">Selected event</p><h2 id="detailTitle">tool response</h2></div><button class="icon-button" id="copyBtn" aria-label="Copy event">⧉</button></div>
+            <div class="event-meta"><span id="eventSeq">sequence 11</span><span id="eventTime">10:41:06.428Z</span></div>
+            <pre id="eventJson"></pre>
+            <div class="detail-callout"><span>✓</span><p><b>Replay contract</b><br />The next request must match this tool name and argument shape exactly.</p></div>
+          </aside>
+        </section>
+        <section class="diff-panel" id="diff">
+          <div><p class="eyebrow">Structural comparison</p><h2>Before vs. current replay tape</h2><p>Ignore timestamps and run IDs; identify behavioral changes only.</p></div>
+          <div class="diff-result"><span class="diff-icon">!</span><div><b>1 meaningful difference</b><small>Tool argument changed at event 07</small></div><button class="secondary" id="viewDiffBtn">View diff</button></div>
+        </section>
+      </main>
+    </div>
+    <dialog id="replayDialog"><div class="dialog-icon">↻</div><p class="eyebrow">Deterministic replay</p><h2 id="dialogTitle">Ready to replay</h2><p id="dialogCopy">This demonstration validates the recorded requests locally. It does not make model or tool calls.</p><div class="dialog-actions"><button class="secondary" id="closeDialog">Cancel</button><button class="primary" id="confirmReplay">Start local replay</button></div></dialog>
+    <script src="app.js"></script>
+  </body>
+</html>
